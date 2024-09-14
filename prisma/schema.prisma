@@ -9,35 +9,43 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  username   String   @unique
-  password   String   @default("")
-  mfaSecret  String? // TOTP secret
-  mfaEnabled Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String   @id @default(cuid()) @map("id")
+  username   String   @unique @map("username")
+  password   String   @default("") @map("password")
+  mfaSecret  String?  @map("mfa_secret")
+  mfaEnabled Boolean  @default(false) @map("mfa_enabled")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
   role       Role     @relation(fields: [roleName], references: [name])
-  roleName   String
+  roleName   String   @map("role_name")
+
+  @@map("users")
 }
 
 model Role {
-  name        String           @id
-  description String?
+  name        String           @id @map("name")
+  description String?          @map("description")
   users       User[]
   permissions RolePermission[]
+
+  @@map("roles")
 }
 
 model Permission {
-  name        String           @id
-  description String?
+  name        String           @id @map("name")
+  description String?          @map("description")
   roles       RolePermission[]
+
+  @@map("permissions")
 }
 
 model RolePermission {
   role           Role       @relation(fields: [roleName], references: [name])
-  roleName       String
+  roleName       String     @map("role_name")
   permission     Permission @relation(fields: [permissionName], references: [name])
-  permissionName String
+  permissionName String     @map("permission_name")
 
   @@id([roleName, permissionName])
+
+  @@map("role_permissions")
 }
