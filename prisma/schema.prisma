@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // provider = "postgresql" // for postgresql
+  provider = "sqlite" // for sqlite
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(cuid())
+  username   String   @unique
+  password   String   @default("")
+  mfaSecret  String? // TOTP secret
+  mfaEnabled Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  role       Role     @relation(fields: [roleName], references: [name])
+  roleName   String
+}
+
+model Role {
+  name        String           @id
+  description String?
+  users       User[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  name        String           @id
+  description String?
+  roles       RolePermission[]
+}
+
+model RolePermission {
+  role           Role       @relation(fields: [roleName], references: [name])
+  roleName       String
+  permission     Permission @relation(fields: [permissionName], references: [name])
+  permissionName String
+
+  @@id([roleName, permissionName])
+}
