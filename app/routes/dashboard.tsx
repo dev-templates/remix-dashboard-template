@@ -1,15 +1,15 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
 import { json, Outlet, redirect, useLoaderData } from "@remix-run/react";
+import { useUser } from "~/hooks/useUser";
 import Sidebar from "~/layouts/sidebar";
 import { requireUser } from "~/services/session.server";
-import { PublicUser } from '~/types/public-user';
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireUser(request);
   if (!user) {
     return redirect("/login");
   }
-  return json<PublicUser>({
+  return json({
     id: user.id,
     username: user.username,
     role: {
@@ -19,10 +19,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Layout() {
-  const user = useLoaderData<typeof loader>();
   return (
-    <div className='flex h-screen bg-gray-100'>
-      <Sidebar user={user} />
+    <div className='flex h-screen'>
+      <Sidebar />
       <main className='flex-1 p-8'>
         <Outlet />
       </main>

@@ -1,20 +1,22 @@
 import { Link, useLocation } from "@remix-run/react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Label } from "~/components/ui/label";
-import { isAdmin, PublicUser } from "~/types/public-user";
+import { isAdmin } from "~/types/public-user";
 import { FaCaretDown } from "react-icons/fa";
 import { VscThreeBars } from "react-icons/vsc";
 import { docsConfig } from "~/config/docs";
 import { cn } from "~/lib/utils";
+import { useUser } from '~/hooks/useUser';
 
-export default function Sidebar({ user }: { user: PublicUser }) {
+export default function Sidebar() {
+  const user = useUser();
   const location = useLocation();
   return (
     <aside className='group/sidebar bg-background shadow-md w-64 transition-all duration-300 flex flex-col min-h-screen [&:has(>input:checked)]:w-16'>
       <input type='checkbox' id='toggle-sidebar' className='hidden' title='Toggle Sidebar' />
       <div className='flex-grow overflow-y-auto'>
         <div className='p-4 flex items-center justify-between'>
-          <h1 className='text-2xl font-bold text-gray-800 group-[:has(>input:checked)]/sidebar:hidden'>Dashboard</h1>
+          <h1 className='text-2xl font-bold group-[:has(>input:checked)]/sidebar:hidden'>Dashboard</h1>
           <Label
             htmlFor='toggle-sidebar'
             className='cursor-pointer group-[:has(>input:checked)]/sidebar:w-full group-[:has(>input:checked)]/sidebar:flex group-[:has(>input:checked)]/sidebar:justify-center'
@@ -64,14 +66,14 @@ export default function Sidebar({ user }: { user: PublicUser }) {
         </nav>
       </div>
 
-      <div className='border-t border-gray-200 p-4 flex items-center group-[:has(>input:checked)]/sidebar:justify-center bg-white'>
+      <div className='border-t p-4 flex items-center group-[:has(>input:checked)]/sidebar:justify-center'>
         <div className='group-[:has(>input:checked)]/sidebar:hidden'>
-          <p className='font-medium text-gray-800'>{user?.username ?? "user1"}</p>
-          <p className='text-sm text-gray-400'>{user?.role?.name ?? "admin"}</p>
+          <p className='font-bold'>{user?.username ?? "user1"}</p>
+          <p className='text-sm text-muted-foreground'>{user?.role?.name ?? "admin"}</p>
         </div>
         <Link
           to='/logout'
-          className='ml-auto p-2 text-gray-500 hover:text-gray-700 group-[:has(>input:checked)]/sidebar:ml-0'
+          className='ml-auto p-2 group-[:has(>input:checked)]/sidebar:ml-0'
           aria-label='Logout'
           title='Logout'
         >

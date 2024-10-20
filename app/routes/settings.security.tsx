@@ -49,7 +49,7 @@ export default function Security() {
       <CardContent>
         <div className='flex items-center justify-between'>
           <div className='flex flex-col space-y-2'>
-            <div className='text-sm text-green-500'>Your already configured two-factor authentication</div>
+            <div className='text-sm text-accent-foreground'>Your already configured two-factor authentication</div>
             {error && <ErrorMessage error={error} />}
             <Dialog>
               <DialogTrigger asChild>

@@ -100,7 +100,7 @@ export async function action({ request }: ActionFunctionArgs) {
       const authenticationCode = (formData.get("authenticationCode") as string) ?? "";
       let mfaSecret = (formData.get("mfaSecret") as string) ?? "";
       const userId = (formData.get("userId") as string) ?? "";
-      const mfaEnabled = formData.get("mfaEnabled") as string === "true";
+      const mfaEnabled = (formData.get("mfaEnabled") as string) === "true";
       const mfaUrl = (formData.get("mfaUrl") as string) ?? "";
       if (mfaEnabled) {
         // MFA is not enabled
@@ -180,7 +180,7 @@ function LoginForm() {
             </div>
             <Input id='username' name='username' type='text' autoComplete='username' required />
             {errors?.username && (
-              <p className='pt-1 text-red-700' id='username-error'>
+              <p className='pt-1 text-destructive' id='username-error'>
                 {errors?.username}
               </p>
             )}
@@ -193,7 +193,7 @@ function LoginForm() {
             </div>
             <Input id='password' name='password' type='password' autoComplete='current-password' required />
             {errors?.password && (
-              <p className='pt-1 text-red-700' id='password-error'>
+              <p className='pt-1 text-destructive' id='password-error'>
                 {errors?.password}
               </p>
             )}
@@ -226,7 +226,7 @@ function TwoFactorForm() {
     }
   }, []);
   const userAgent = navigator.userAgent.toLowerCase();
-  const appleDevices = ['iphone', 'ipad', 'ipod', 'mac'];
+  const appleDevices = ["iphone", "ipad", "ipod", "mac"];
   const isApple = appleDevices.some(device => userAgent.includes(device));
   let googleAuthenticatorUrl = "https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2";
   if (isApple) {
@@ -247,16 +247,11 @@ function TwoFactorForm() {
         </CardHeader>
         <CardContent>
           <div className='mb-4'>
-            <span className='text-sm text-gray-500'>
+            <span className='text-sm text-muted-foreground'>
               Authenticator apps and browser extensions like
               <ul>
                 <li>
-                  <a
-                    className='underline'
-                    href={googleAuthenticatorUrl}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
+                  <a className='underline' href={googleAuthenticatorUrl} target='_blank' rel='noopener noreferrer'>
                     Google Authenticator
                   </a>
                 </li>
@@ -295,14 +290,16 @@ function TwoFactorForm() {
               during sign-in.
             </span>
           </div>
-          <div className='flex flex-col items-center mb-4'>
-            <h5 className='text-lg font-bold'>Scan the QR code</h5>
-            <div className='text-sm text-gray-500'>Use an authenticator app or browser extension to scan.</div>
-          </div>
           {!mfaEnabled && (
-            <div className='flex justify-center mb-4'>
-              <QRCodeSVG value={mfaUrl} size={212} />
-            </div>
+            <>
+              <div className='flex flex-col items-center mb-4'>
+                <h5 className='text-lg font-bold'>Scan the QR code</h5>
+                <div className='text-sm text-muted-foreground'>Use an authenticator app or browser extension to scan.</div>
+              </div>
+              <div className='flex justify-center mb-4'>
+                <QRCodeSVG value={mfaUrl} size={212} className='p-4 bg-white' />
+              </div>
+            </>
           )}
           <div className='flex flex-col items-center justify-center mb-4'>
             <Label htmlFor='verification-code' className='mb-2'>
@@ -326,14 +323,14 @@ function TwoFactorForm() {
               </InputOTPGroup>
             </InputOTP>
             {errors?.verificationCode && navigation.state !== "submitting" && (
-              <p className='pt-1 text-red-700' id='verification-code-error'>
+              <p className='pt-1 text-destructive' id='verification-code-error'>
                 {errors?.verificationCode}
               </p>
             )}
           </div>
         </CardContent>
         <CardFooter>
-          <Button type='submit' isLoading={navigation.state === "submitting"} className='w-full'>
+          <Button type='submit' isLoading={navigation.state === "submitting"} disabled={navigation.state === "submitting"} className='w-full'>
             Verify
           </Button>
         </CardFooter>

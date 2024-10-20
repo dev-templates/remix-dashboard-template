@@ -244,13 +244,6 @@ export default function AdminUsers() {
     },
   });
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    // toast.success("You submitted the following values:", {
-    //   description: (
-    //     <pre className='mt-2 w-full rounded-md bg-slate-950 p-4'>
-    //       <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
     submit(
       {
         _action: "new-user",

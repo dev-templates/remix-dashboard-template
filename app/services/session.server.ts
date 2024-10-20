@@ -1,10 +1,11 @@
 import { createCookieSessionStorage } from "@remix-run/node";
 import { redirect } from "@remix-run/react";
+import { createThemeSessionResolver } from 'remix-themes';
 import invariant from "tiny-invariant";
 import { getUserById, User } from "~/models/user.server";
 
 // export the whole sessionStorage object
-export const sessionStorage = createCookieSessionStorage({
+export const cookieSessionStorage = createCookieSessionStorage({
   cookie: {
     name: "_session", // use any name you want here
     sameSite: "lax", // this helps with CSRF
@@ -44,7 +45,7 @@ export async function logout(request: Request) {
   const { session } = await getSession(request);
   return redirect("/", {
     headers: {
-      "Set-Cookie": await sessionStorage.destroySession(session),
+      "Set-Cookie": await cookieSessionStorage.destroySession(session),
     },
   });
 }
@@ -62,7 +63,7 @@ export async function getUser(request: Request) {
 
 export async function getSession(request: Request) {
   const cookie = request.headers.get("Cookie");
-  const session = await sessionStorage.getSession(cookie);
+  const session = await cookieSessionStorage.getSession(cookie);
   return { session };
 }
 
@@ -82,7 +83,7 @@ export async function createUserSession({
 
   return redirect(redirectTo, {
     headers: {
-      "Set-Cookie": await sessionStorage.commitSession(session, {
+      "Set-Cookie": await cookieSessionStorage.commitSession(session, {
         maxAge: remember
           ? 60 * 60 * 24 * 7 // 7 days
           : undefined,
@@ -92,3 +93,6 @@ export async function createUserSession({
 }
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
+
+
+export const themeSessionResolver = createThemeSessionResolver(cookieSessionStorage);
