@@ -437,7 +437,7 @@ export default function AdminUsers() {
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={4}>
-                  <NumberPagination totalPages={totalPages} page={page} />
+                  <NumberPagination totalPages={totalPages} page={page} pageSize={pageSize} defaultPageSize={10} />
                 </TableCell>
               </TableRow>
             </TableFooter>
