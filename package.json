@@ -51,7 +51,7 @@
   "devDependencies": {
     "@remix-run/dev": "^2.13.1",
     "@types/bcryptjs": "^2.4.6",
-    "@types/react": "^18.3.11",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/speakeasy": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
