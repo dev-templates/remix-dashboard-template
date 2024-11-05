@@ -173,8 +173,8 @@ importers:
         specifier: ^5.4.10
         version: 5.4.10(@types/node@22.7.7)
       vite-tsconfig-paths:
-        specifier: ^5.0.1
-        version: 5.0.1(typescript@5.6.3)(vite@5.4.10(@types/node@22.7.7))
+        specifier: ^5.1.0
+        version: 5.1.0(typescript@5.6.3)(vite@5.4.10(@types/node@22.7.7))
 
 packages:
 
@@ -2336,6 +2336,7 @@ packages:
 
   input-otp@1.4.0:
     resolution: {integrity: sha512-whngTwnXhSQijjxNGUaU/O94LNugnuliZoWktQd5nVYESNlb01guoo+1T/1zppJ8fbo2J2/GVe20x3M6qpgdFg==}
+    deprecated: Please update to input-otp@latest as it supports react@19-rc too
     peerDependencies:
       react: ^16.8 || ^17.0 || ^18.0 || ^19.0
       react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0
@@ -3892,8 +3893,8 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-tsconfig-paths@5.0.1:
-    resolution: {integrity: sha512-yqwv+LstU7NwPeNqajZzLEBVpUFU6Dugtb2P84FXuvaoYA+/70l9MHE+GYfYAycVyPSDYZ7mjOFuYBRqlEpTig==}
+  vite-tsconfig-paths@5.1.0:
+    resolution: {integrity: sha512-Y1PLGHCJfAq1Zf4YIGEsmuU/NCX1epoZx9zwSr32Gjn3aalwQHRKr5aUmbo6r0JHeHkqmWpmDg7WOynhYXw1og==}
     peerDependencies:
       vite: '*'
     peerDependenciesMeta:
@@ -8342,7 +8343,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite-tsconfig-paths@5.0.1(typescript@5.6.3)(vite@5.4.10(@types/node@22.7.7)):
+  vite-tsconfig-paths@5.1.0(typescript@5.6.3)(vite@5.4.10(@types/node@22.7.7)):
     dependencies:
       debug: 4.3.7
       globrex: 0.1.2
