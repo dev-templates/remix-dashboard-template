@@ -19,8 +19,8 @@ importers:
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.54.0(react@18.3.1))
       '@prisma/client':
-        specifier: ^5.22.0
-        version: 5.22.0(prisma@5.22.0)
+        specifier: ^6.0.1
+        version: 6.0.1(prisma@5.22.0)
       '@radix-ui/react-dialog':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -606,9 +606,9 @@ packages:
     resolution: {integrity: sha512-gGq0NJkIGSwdbUt4yhdF8ZrmkGKVz9vAdVzpOfnom+V8PLSmSOVhZwbNvZZS1EYcJN5hzzKBxmmVVAInM6HQLg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  '@prisma/client@5.22.0':
-    resolution: {integrity: sha512-M0SVXfyHnQREBKxCgyo7sffrKttwE6R8PMq330MIUF0pTwjUhLbW84pFDlf06B27XyCR++VtjugEnIHdr07SVA==}
-    engines: {node: '>=16.13'}
+  '@prisma/client@6.0.1':
+    resolution: {integrity: sha512-60w7kL6bUxz7M6Gs/V+OWMhwy94FshpngVmOY05TmGD0Lhk+Ac0ZgtjlL6Wll9TD4G03t4Sq1wZekNVy+Xdlbg==}
+    engines: {node: '>=18.18'}
     peerDependencies:
       prisma: '*'
     peerDependenciesMeta:
@@ -1021,15 +1021,6 @@ packages:
       typescript:
         optional: true
 
-  '@remix-run/node@2.15.0':
-    resolution: {integrity: sha512-tWbR7pQ6gwj+MkGf6WVIYnjgfGfpdU8EOIa6xsCIRlrm0p3BtMz4jA3GvBWEpOuEnN5MV7CarVzhduaRzkZ0SQ==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   '@remix-run/node@2.15.1':
     resolution: {integrity: sha512-23xWN3/yOohNUr27KS7hEcDMbtufMkniXfXkcLx8Dz2wUVNfJYGpICjeV48Ue/INtpiUCCzOYwkL9VRjIMEJbA==}
     engines: {node: '>=18.0.0'}
@@ -1058,15 +1049,6 @@ packages:
     resolution: {integrity: sha512-NRpAEpqy670jMY3SX5fzu/jKD8Kb4vlLS3k1xksjnjZSjSyaH2fGCsxvlbDpSOCucukMeTEKU424iiScWsDBtg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
-
-  '@remix-run/server-runtime@2.15.0':
-    resolution: {integrity: sha512-FuM8vAg1sPskf4wn0ivbuj/7s9Qdh2wnKu+sVXqYz0a95gH5b73TuMzk6n3NMSkFVKKc6+UmlG1WLYre7L2LTg==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
 
   '@remix-run/server-runtime@2.15.1':
     resolution: {integrity: sha512-TDM3rzax//N2F5uNMV5pNTWAop8cYul6hteDu+Xmfwys/eRGlbzEf7YJzyRj6Kcsg2TFVHI7+xEPItGAVm1hHA==}
@@ -4461,7 +4443,7 @@ snapshots:
     dependencies:
       which: 3.0.1
 
-  '@prisma/client@5.22.0(prisma@5.22.0)':
+  '@prisma/client@6.0.1(prisma@5.22.0)':
     optionalDependencies:
       prisma: 5.22.0
 
@@ -4928,18 +4910,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.2
 
-  '@remix-run/node@2.15.0(typescript@5.7.2)':
-    dependencies:
-      '@remix-run/server-runtime': 2.15.0(typescript@5.7.2)
-      '@remix-run/web-fetch': 4.4.2
-      '@web3-storage/multipart-parser': 1.0.0
-      cookie-signature: 1.2.1
-      source-map-support: 0.5.21
-      stream-slice: 0.1.2
-      undici: 6.20.1
-    optionalDependencies:
-      typescript: 5.7.2
-
   '@remix-run/node@2.15.1(typescript@5.7.2)':
     dependencies:
       '@remix-run/server-runtime': 2.15.1(typescript@5.7.2)
@@ -4979,18 +4949,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  '@remix-run/server-runtime@2.15.0(typescript@5.7.2)':
-    dependencies:
-      '@remix-run/router': 1.21.0
-      '@types/cookie': 0.6.0
-      '@web3-storage/multipart-parser': 1.0.0
-      cookie: 0.6.0
-      set-cookie-parser: 2.7.0
-      source-map: 0.7.4
-      turbo-stream: 2.4.0
-    optionalDependencies:
-      typescript: 5.7.2
 
   '@remix-run/server-runtime@2.15.1(typescript@5.7.2)':
     dependencies:
