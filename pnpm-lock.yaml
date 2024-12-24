@@ -116,8 +116,8 @@ importers:
         version: 3.24.1
     devDependencies:
       '@remix-run/dev':
-        specifier: ^2.15.1
-        version: 2.15.1(@remix-run/react@2.15.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@remix-run/serve@2.15.2(typescript@5.7.2))(@types/node@22.7.7)(typescript@5.7.2)(vite@5.4.11(@types/node@22.7.7))
+        specifier: ^2.15.2
+        version: 2.15.2(@remix-run/react@2.15.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@remix-run/serve@2.15.2(typescript@5.7.2))(@types/node@22.7.7)(typescript@5.7.2)(vite@5.4.11(@types/node@22.7.7))
       '@types/bcryptjs':
         specifier: ^2.4.6
         version: 2.4.6
@@ -1013,13 +1013,13 @@ packages:
   '@radix-ui/rect@1.1.0':
     resolution: {integrity: sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==}
 
-  '@remix-run/dev@2.15.1':
-    resolution: {integrity: sha512-vuAVNCW0TsjdoLrpXRFTDJzWut+cfOYw6HVrwdin3J/isfZ2ZyRUNo4kdK4TkmEXoRtTWLk1MG6LbeTAJlg11g==}
+  '@remix-run/dev@2.15.2':
+    resolution: {integrity: sha512-o8lix8t4GBhtXjo/G1IzwtHVW5GRMs7amtFtBHiR1bhSyK7VyX5qGtTDmJyny5QDv83pxaLOCiE0dUng2BCoyQ==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
-      '@remix-run/react': ^2.15.1
-      '@remix-run/serve': ^2.15.1
+      '@remix-run/react': ^2.15.2
+      '@remix-run/serve': ^2.15.2
       typescript: ^5.1.0
       vite: ^5.1.0
       wrangler: ^3.28.2
@@ -1038,15 +1038,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       express: ^4.20.0
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
-  '@remix-run/node@2.15.1':
-    resolution: {integrity: sha512-23xWN3/yOohNUr27KS7hEcDMbtufMkniXfXkcLx8Dz2wUVNfJYGpICjeV48Ue/INtpiUCCzOYwkL9VRjIMEJbA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
       typescript: ^5.1.0
     peerDependenciesMeta:
       typescript:
@@ -1080,15 +1071,6 @@ packages:
     resolution: {integrity: sha512-m/nZtAUzzGcixNgNc3RNjA1ocFlWAuZFALpZ5fJdPXmITwqRwfjo/1gI+jx7AL7haoo+4j/sAljuAQw2CiswXA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
-
-  '@remix-run/server-runtime@2.15.1':
-    resolution: {integrity: sha512-TDM3rzax//N2F5uNMV5pNTWAop8cYul6hteDu+Xmfwys/eRGlbzEf7YJzyRj6Kcsg2TFVHI7+xEPItGAVm1hHA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      typescript: ^5.1.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
 
   '@remix-run/server-runtime@2.15.2':
     resolution: {integrity: sha512-OqiPcvEnnU88B8b1LIWHHkQ3Tz2GDAmQ1RihFNQsbrFKpDsQLkw0lJlnfgKA/uHd0CEEacpfV7C9qqJT3V6Z2g==}
@@ -1715,10 +1697,6 @@ packages:
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
-
-  cross-spawn@7.0.5:
-    resolution: {integrity: sha512-ZVJrKKYunU38/76t0RMOulHOnUcbU9GbpWKAOZ0mhjr7CX6FVrH+4FrAapSOekrgFQ3f/8gwMEuIft0aKq6Hug==}
-    engines: {node: '>= 8'}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -3709,10 +3687,6 @@ packages:
     resolution: {integrity: sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==}
     engines: {node: '>= 0.4'}
 
-  side-channel@1.0.6:
-    resolution: {integrity: sha512-fDW/EZ6Q9RiO8eFG8Hj+7u/oW+XrPTIChwCOM2+th2A6OblDtYYIpve9m+KvI9Z4C9qSEXlaGR6bTEYHReuglA==}
-    engines: {node: '>= 0.4'}
-
   side-channel@1.1.0:
     resolution: {integrity: sha512-ZX99e6tRweoUXqR+VBrslhda51Nh5MTQwou5tnUDgbtyM0dBgmhEDtWGP/xbKn6hqfPRHujUNwz5fy/wbbhnpw==}
     engines: {node: '>= 0.4'}
@@ -5116,7 +5090,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.0': {}
 
-  '@remix-run/dev@2.15.1(@remix-run/react@2.15.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@remix-run/serve@2.15.2(typescript@5.7.2))(@types/node@22.7.7)(typescript@5.7.2)(vite@5.4.11(@types/node@22.7.7))':
+  '@remix-run/dev@2.15.2(@remix-run/react@2.15.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2))(@remix-run/serve@2.15.2(typescript@5.7.2))(@types/node@22.7.7)(typescript@5.7.2)(vite@5.4.11(@types/node@22.7.7))':
     dependencies:
       '@babel/core': 7.25.8
       '@babel/generator': 7.25.7
@@ -5128,17 +5102,17 @@ snapshots:
       '@babel/types': 7.25.8
       '@mdx-js/mdx': 2.3.0
       '@npmcli/package-json': 4.0.1
-      '@remix-run/node': 2.15.1(typescript@5.7.2)
+      '@remix-run/node': 2.15.2(typescript@5.7.2)
       '@remix-run/react': 2.15.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@remix-run/router': 1.21.0
-      '@remix-run/server-runtime': 2.15.1(typescript@5.7.2)
+      '@remix-run/server-runtime': 2.15.2(typescript@5.7.2)
       '@types/mdx': 2.0.13
       '@vanilla-extract/integration': 6.5.0(@types/node@22.7.7)
       arg: 5.0.2
       cacache: 17.1.4
       chalk: 4.1.2
       chokidar: 3.6.0
-      cross-spawn: 7.0.5
+      cross-spawn: 7.0.6
       dotenv: 16.4.5
       es-module-lexer: 1.5.4
       esbuild: 0.23.1
@@ -5201,18 +5175,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.2
 
-  '@remix-run/node@2.15.1(typescript@5.7.2)':
-    dependencies:
-      '@remix-run/server-runtime': 2.15.1(typescript@5.7.2)
-      '@remix-run/web-fetch': 4.4.2
-      '@web3-storage/multipart-parser': 1.0.0
-      cookie-signature: 1.2.1
-      source-map-support: 0.5.21
-      stream-slice: 0.1.2
-      undici: 6.20.1
-    optionalDependencies:
-      typescript: 5.7.2
-
   '@remix-run/node@2.15.2(typescript@5.7.2)':
     dependencies:
       '@remix-run/server-runtime': 2.15.2(typescript@5.7.2)
@@ -5252,18 +5214,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
-
-  '@remix-run/server-runtime@2.15.1(typescript@5.7.2)':
-    dependencies:
-      '@remix-run/router': 1.21.0
-      '@types/cookie': 0.6.0
-      '@web3-storage/multipart-parser': 1.0.0
-      cookie: 0.6.0
-      set-cookie-parser: 2.7.0
-      source-map: 0.7.4
-      turbo-stream: 2.4.0
-    optionalDependencies:
-      typescript: 5.7.2
 
   '@remix-run/server-runtime@2.15.2(typescript@5.7.2)':
     dependencies:
@@ -6000,12 +5950,6 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cross-spawn@7.0.5:
-    dependencies:
-      path-key: 3.1.1
-      shebang-command: 2.0.0
-      which: 2.0.2
-
   cross-spawn@7.0.6:
     dependencies:
       path-key: 3.1.1
@@ -6616,7 +6560,7 @@ snapshots:
 
   execa@5.1.1:
     dependencies:
-      cross-spawn: 7.0.5
+      cross-spawn: 7.0.6
       get-stream: 6.0.1
       human-signals: 2.1.0
       is-stream: 2.0.1
@@ -6967,7 +6911,7 @@ snapshots:
     dependencies:
       es-errors: 1.3.0
       hasown: 2.0.2
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   internal-slot@1.1.0:
     dependencies:
@@ -8087,7 +8031,7 @@ snapshots:
 
   qs@6.13.0:
     dependencies:
-      side-channel: 1.0.6
+      side-channel: 1.1.0
 
   queue-microtask@1.2.3: {}
 
@@ -8464,13 +8408,6 @@ snapshots:
       get-intrinsic: 1.2.6
       object-inspect: 1.13.3
       side-channel-map: 1.0.1
-
-  side-channel@1.0.6:
-    dependencies:
-      call-bind: 1.0.7
-      es-errors: 1.3.0
-      get-intrinsic: 1.2.4
-      object-inspect: 1.13.2
 
   side-channel@1.1.0:
     dependencies:
