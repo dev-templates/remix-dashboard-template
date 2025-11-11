@@ -4,94 +4,156 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create default roles
-  const adminRole = await prisma.role.create({
-    data: {
-      name: "admin",
-      description: "Administrator with full access",
-    },
-  });
+	console.log("🌱 Seeding database...");
 
-  const editorRole = await prisma.role.create({
-    data: {
-      name: "editor",
-      description: "Can create and edit content",
-    },
-  });
+	const adminRole = await prisma.role.upsert({
+		where: { name: "admin" },
+		update: {
+			description: "Administrator with full access",
+		},
+		create: {
+			name: "admin",
+			description: "Administrator with full access",
+		},
+	});
+	console.log("✓ Created/updated role: admin");
 
-  await prisma.role.create({
-    data: {
-      name: "user",
-      description: "Regular user with limited access",
-    },
-  });
+	const editorRole = await prisma.role.upsert({
+		where: { name: "editor" },
+		update: {
+			description: "Can create and edit content",
+		},
+		create: {
+			name: "editor",
+			description: "Can create and edit content",
+		},
+	});
+	console.log("✓ Created/updated role: editor");
 
-  // Create default permissions
-  const permissionCreatePost = await prisma.permission.create({
-    data: {
-      name: "create_post",
-      description: "Can create new posts",
-    },
-  });
+	await prisma.role.upsert({
+		where: { name: "user" },
+		update: {
+			description: "Regular user with limited access",
+		},
+		create: {
+			name: "user",
+			description: "Regular user with limited access",
+		},
+	});
+	console.log("✓ Created/updated role: user");
 
-  const permissionEditPost = await prisma.permission.create({
-    data: {
-      name: "edit_post",
-      description: "Can edit existing posts",
-    },
-  });
+	const permissionCreatePost = await prisma.permission.upsert({
+		where: { name: "create_post" },
+		update: {
+			description: "Can create new posts",
+		},
+		create: {
+			name: "create_post",
+			description: "Can create new posts",
+		},
+	});
+	console.log("✓ Created/updated permission: create_post");
 
-  const permissionDeletePost = await prisma.permission.create({
-    data: {
-      name: "delete_post",
-      description: "Can delete posts",
-    },
-  });
+	const permissionEditPost = await prisma.permission.upsert({
+		where: { name: "edit_post" },
+		update: {
+			description: "Can edit existing posts",
+		},
+		create: {
+			name: "edit_post",
+			description: "Can edit existing posts",
+		},
+	});
+	console.log("✓ Created/updated permission: edit_post");
 
-  const permissionManageUsers = await prisma.permission.create({
-    data: {
-      name: "manage_users",
-      description: "Can manage user accounts",
-    },
-  });
+	const permissionDeletePost = await prisma.permission.upsert({
+		where: { name: "delete_post" },
+		update: {
+			description: "Can delete posts",
+		},
+		create: {
+			name: "delete_post",
+			description: "Can delete posts",
+		},
+	});
+	console.log("✓ Created/updated permission: delete_post");
 
-  // Assign permissions to roles
-  await prisma.rolePermission.createMany({
-    data: [
-      // Admin role permissions
-      { roleName: adminRole.name, permissionName: permissionCreatePost.name }, // create_post
-      { roleName: adminRole.name, permissionName: permissionEditPost.name }, // edit_post
-      { roleName: adminRole.name, permissionName: permissionDeletePost.name }, // delete_post
-      { roleName: adminRole.name, permissionName: permissionManageUsers.name }, // manage_users
+	const permissionManageUsers = await prisma.permission.upsert({
+		where: { name: "manage_users" },
+		update: {
+			description: "Can manage user accounts",
+		},
+		create: {
+			name: "manage_users",
+			description: "Can manage user accounts",
+		},
+	});
+	console.log("✓ Created/updated permission: manage_users");
 
-      // Editor role permissions
-      { roleName: editorRole.name, permissionName: permissionCreatePost.name }, // create_post
-      { roleName: editorRole.name, permissionName: permissionEditPost.name }, // edit_post
+	const rolePermissions = [
+		// Admin role permissions
+		{ roleName: adminRole.name, permissionName: permissionCreatePost.name },
+		{ roleName: adminRole.name, permissionName: permissionEditPost.name },
+		{ roleName: adminRole.name, permissionName: permissionDeletePost.name },
+		{ roleName: adminRole.name, permissionName: permissionManageUsers.name },
+		// Editor role permissions
+		{ roleName: editorRole.name, permissionName: permissionCreatePost.name },
+		{ roleName: editorRole.name, permissionName: permissionEditPost.name },
+	];
 
-      // User role permissions
-      // (no special permissions for regular users)
-    ],
-  });
+	for (const rp of rolePermissions) {
+		await prisma.rolePermission.upsert({
+			where: {
+				roleName_permissionName: {
+					roleName: rp.roleName,
+					permissionName: rp.permissionName,
+				},
+			},
+			update: {},
+			create: rp,
+		});
+	}
+	console.log("✓ Assigned role permissions");
 
-  // Create default users
-  const hashedPassword = await bcrypt.hash("admin", 10);
-  await prisma.user.createMany({
-    data: [
-      {
-        username: "admin",
-        password: hashedPassword,
-        roleName: adminRole.name,
-      },
-    ],
-  });
+	const hashedPassword = await bcrypt.hash("admin", 10);
+	const existingAdmin = await prisma.user.findUnique({
+		where: { username: "admin" },
+	});
 
-  console.log("Seed data inserted successfully");
+	if (!existingAdmin) {
+		await prisma.user.create({
+			data: {
+				username: "admin",
+				password: hashedPassword,
+				roleName: adminRole.name,
+			},
+		});
+		console.log("✓ Created default admin user (username: admin, password: admin)");
+	} else {
+		console.log("⏭️  Admin user already exists, skipping creation");
+	}
+
+	await prisma.systemSettings.upsert({
+		where: { key: "require2FA" },
+		update: {
+			value: "false",
+			description: "Whether to require all users to enable two-factor authentication",
+		},
+		create: {
+			key: "require2FA",
+			value: "false",
+			description: "Whether to require all users to enable two-factor authentication",
+		},
+	});
+	console.log("✓ Created/updated system setting: require2FA");
+
+	console.log("✅ Database seeding completed successfully");
 }
 
 main()
-  .catch(e => {
-    console.error(e);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+	.catch((e) => {
+		console.error(e);
+	})
+	.finally(async () => {
+		await prisma.$disconnect();
+	});

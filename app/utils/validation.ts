@@ -1,6 +1,9 @@
-import type { User } from "~/models/user.server";
-
 // Check if the user is valid
-export function isUser(user: any) {
-  return user && typeof user === "object" && typeof user.username === "string";
+export function isUser(user: unknown): user is { username: string } {
+	return (
+		typeof user === "object" &&
+		user !== null &&
+		"username" in user &&
+		typeof (user as { username: unknown }).username === "string"
+	);
 }
