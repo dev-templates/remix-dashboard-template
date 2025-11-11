@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL:-file:./data/production.db}
+      - SESSION_SECRET=${SESSION_SECRET:-change-this-to-a-random-secret}
+      - SKIP_SEED=true
+    volumes:
+      # Persist SQLite database
+      - app-data:/app/data
+    restart: unless-stopped
+
+  # Optional: PostgreSQL database
+  # Uncomment the following service if you want to use PostgreSQL
+  # postgres:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     - POSTGRES_USER=remix
+  #     - POSTGRES_PASSWORD=remix_password
+  #     - POSTGRES_DB=remix_dashboard
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U remix"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+  # To use PostgreSQL:
+  # 1. Uncomment the postgres service above
+  # 2. Update DATABASE_URL in .env:
+  #    DATABASE_URL=postgresql://remix:remix_password@postgres:5432/remix_dashboard
+  # 3. Update prisma/schema.prisma provider to "postgresql"
+  # 4. Add depends_on to app service:
+  #    depends_on:
+  #      postgres:
+  #        condition: service_healthy
+
+volumes:
+  app-data:
+  # postgres-data:

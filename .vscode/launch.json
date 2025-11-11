@@ -12,6 +12,7 @@
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
       "cwd": "${workspaceFolder}",
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }

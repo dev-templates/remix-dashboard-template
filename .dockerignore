@@ -1,20 +1,44 @@
+# Docker files
 Dockerfile
 .dockerignore
+
+# Version control
 .git
+.gitignore
+
+# Dependencies (will be installed during build)
 node_modules
-npm-debug.log
+
+# Build artifacts (will be generated during build)
 /.cache
 /build
 /public/build
+
+# Development files
 .env
+.env.example
 README.md
 /.vscode
 /.github
+
+# Development database
+/prisma/dev.db
+*.db
+*.db-*
+
+# Linting and formatting configs (using Biome now)
 .eslintrc.*
-.gitignore
+.prettierrc.*
+biome.json
+
+# Scripts and services
 install.sh
 Makefile
 *.service
-/prisma/migrations
-/prisma/seed.js
-/prisma/dev.db
+
+# Logs
+npm-debug.log
+*.log
+
+# Lock file for database initialization
+.db-init.lock

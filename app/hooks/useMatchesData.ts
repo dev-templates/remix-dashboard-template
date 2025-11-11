@@ -8,7 +8,10 @@ import { useMemo } from "react";
  * @returns {JSON|undefined} The router data or undefined if not found
  */
 export function useMatchesData(id: string) {
-  const matchingRoutes = useMatches();
-  const route = useMemo(() => matchingRoutes.find(route => route.id === id), [matchingRoutes, id]);
-  return route?.data;
+	const matchingRoutes = useMatches();
+	const route = useMemo(
+		() => matchingRoutes.find((route) => route.id === id),
+		[matchingRoutes, id],
+	);
+	return route?.data;
 }

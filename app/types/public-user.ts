@@ -1,5 +1,4 @@
-import { Role, User } from "@prisma/client";
-import { getUser } from '~/services/session.server';
+import type { getUser } from "~/services/session.server";
 
 // export interface PublicUser {
 //   id: User["id"];
@@ -10,6 +9,5 @@ import { getUser } from '~/services/session.server';
 // }
 
 export function isAdmin(user: Awaited<ReturnType<typeof getUser>>) {
-  return user?.role?.name === "admin";
+	return user?.role?.name === "admin";
 }
-

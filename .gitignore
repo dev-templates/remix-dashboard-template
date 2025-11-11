@@ -1,8 +1,26 @@
-node_modules
+# Claude
+/.claude
+AGENTS.md
+CLAUDE.md
 
+# Node.js
+/node_modules
+
+# Caches
 /.cache
+
+# Build
 /build
+
+# Environment variables
 .env
 
+# Prisma
 prisma/migrations
 prisma/dev.db
+
+# Database initialization lock
+.db-init.lock
+
+# OpenSpec
+/openspec

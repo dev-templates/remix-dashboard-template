@@ -3,8 +3,18 @@ generator client {
 }
 
 datasource db {
-  // provider = "postgresql" // for postgresql
-  provider = "sqlite" // for sqlite
+  // Database provider (must be hardcoded, cannot use environment variables)
+  // Common options:
+  // provider = "postgresql"  // PostgreSQL
+  // provider = "mysql"       // MySQL / MariaDB
+  // provider = "sqlite"      // SQLite (default for development)
+  // provider = "sqlserver"   // Microsoft SQL Server
+  // provider = "mongodb"     // MongoDB
+  // provider = "cockroachdb" // CockroachDB
+  //
+  // Full list of supported providers:
+  // https://www.prisma.io/docs/orm/reference/prisma-schema-reference#datasource
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -48,4 +58,15 @@ model RolePermission {
   @@id([roleName, permissionName])
 
   @@map("role_permissions")
+}
+
+model SystemSettings {
+  id          String   @id @default(cuid()) @map("id")
+  key         String   @unique @map("key")
+  value       String   @map("value")
+  description String?  @map("description")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("system_settings")
 }
