@@ -44,7 +44,7 @@
     "react-dom": "^19.2.3",
     "react-hook-form": "^7.70.0",
     "react-icons": "^5.5.0",
-    "react-router-dom": "^7.11.0",
+    "react-router-dom": "^7.12.0",
     "recharts": "^3.6.0",
     "remix-themes": "^2.0.4",
     "sonner": "^2.0.7",
