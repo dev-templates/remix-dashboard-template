@@ -1,21 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
 }
 
 datasource db {
-  // Database provider (must be hardcoded, cannot use environment variables)
-  // Common options:
-  // provider = "postgresql"  // PostgreSQL
-  // provider = "mysql"       // MySQL / MariaDB
-  // provider = "sqlite"      // SQLite (default for development)
-  // provider = "sqlserver"   // Microsoft SQL Server
-  // provider = "mongodb"     // MongoDB
-  // provider = "cockroachdb" // CockroachDB
-  //
-  // Full list of supported providers:
-  // https://www.prisma.io/docs/orm/reference/prisma-schema-reference#datasource
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 
 model User {

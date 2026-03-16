@@ -9,7 +9,6 @@ services:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL:-file:./data/production.db}
       - SESSION_SECRET=${SESSION_SECRET:-change-this-to-a-random-secret}
-      - SKIP_SEED=true
     volumes:
       # Persist SQLite database
       - app-data:/app/data

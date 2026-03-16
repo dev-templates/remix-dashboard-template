@@ -63,7 +63,7 @@ export async function runMigrationDev(): Promise<void> {
 	try {
 		console.log("🔄 Applying database migrations...");
 
-		execSync("npx prisma migrate dev --skip-seed", {
+		execSync("npx prisma migrate dev", {
 			stdio: "inherit",
 			cwd: process.cwd(),
 		});
@@ -111,7 +111,7 @@ export async function runSeed(): Promise<void> {
 	try {
 		console.log("🌱 Inserting seed data...");
 
-		execSync("node prisma/seed.js", {
+		execSync("npx tsx prisma/seed.js", {
 			stdio: "inherit",
 			cwd: process.cwd(),
 		});

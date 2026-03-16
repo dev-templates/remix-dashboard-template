@@ -1,8 +1,8 @@
-import type { Permission, User } from "@prisma/client";
+import type { Permission, User } from "~/generated/prisma/client";
 import bcrypt from "bcryptjs";
 import { prisma } from "~/lib/prisma.server";
 
-export type { User } from "@prisma/client";
+export type { User } from "~/generated/prisma/client";
 
 export async function getUserById(userId: User["id"]) {
 	return prisma.user.findUnique({

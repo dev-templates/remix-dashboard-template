@@ -1,7 +1,7 @@
-import type { SystemSettings } from "@prisma/client";
+import type { SystemSettings } from "~/generated/prisma/client";
 import { prisma } from "~/lib/prisma.server";
 
-export type { SystemSettings } from "@prisma/client";
+export type { SystemSettings } from "~/generated/prisma/client";
 
 /**
  * Get a single system setting value

@@ -18,6 +18,8 @@ CLAUDE.md
 # Prisma
 prisma/migrations
 prisma/dev.db
+dev.db
+app/generated
 
 # Database initialization lock
 .db-init.lock

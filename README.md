@@ -31,9 +31,10 @@ A basic dashboard template implemented using Remix and shadcn/ui, designed for q
   - Database auto-initialization for both development and production
 
 ### Tech Stack
-- Development with [Vite](https://vitejs.dev)
+- Custom [Hono](https://hono.dev/) server with Node.js `cluster` for multi-core utilization
+- Development with [Vite](https://vitejs.dev) 8 (Rolldown-powered)
 - Database: [SQLite](https://sqlite.org) (dev) / [PostgreSQL](https://www.postgresql.org/) (production ready)
-- Database ORM with [Prisma](https://prisma.io)
+- Database ORM with [Prisma](https://prisma.io) 7
 - [GitHub Actions](https://github.com/features/actions) for deploy on merge to production and staging environments
 - Styling with [Tailwind CSS v4](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/)
 - Dark mode support with [next-themes](https://github.com/pacocoursey/next-themes)
@@ -91,17 +92,19 @@ Get started in just three steps:
    pnpm dev
    ```
 
-   🎉 **That's it!** The database will be automatically initialized, including:
+   That's it! The database will be automatically initialized, including:
    - Auto-generate Prisma Client
    - Auto-apply database migrations
    - Auto-insert initial seed data
 
 ### How it works
 
-The application uses **automatic database initialization**:
+The application uses **automatic database initialization** — no manual commands needed:
 
-- **Development environment**: When running `pnpm dev`, the Vite plugin automatically checks database status and performs necessary initialization
-- **Production environment**: Before running `pnpm start`, the `prestart` script automatically executes database migrations
+- **Development**: When running `pnpm dev`, the Vite plugin automatically checks database status and performs necessary initialization
+- **Production**: When running `pnpm start`, the custom Hono server automatically runs `prisma migrate deploy` and seeds the database if empty, before accepting any requests
+- **Multi-core**: In production, the server uses Node.js `cluster` to fork one worker per CPU core, fully utilizing system hardware
+- **PM2 compatible**: Automatically detects PM2 cluster mode to avoid double-forking; `prisma migrate deploy` has built-in advisory locking for concurrent safety
 
 ### Default administrator account
 
@@ -170,13 +173,14 @@ pnpm run typecheck
 - `NODE_ENV` - Runtime environment (`development` / `production`)
   - Default: `development`
 
-- `SKIP_DB_INIT` - Skip automatic database initialization
-  - Set to `true` to disable automatic initialization
-  - Useful for debugging or special scenarios
+- `HOST` - Server bind address
+  - Default: `0.0.0.0`
 
-- `SKIP_SEED` - Skip seed data insertion
-  - Set to `true` to skip inserting initial data
-  - **Strongly recommended to set to `true` in production**
+- `PORT` - Server port
+  - Default: `3000`
+
+- `SKIP_DB_INIT` - Skip automatic database initialization in development
+  - Set to `true` to disable automatic initialization
 
 ### Production environment configuration example
 
@@ -184,7 +188,6 @@ pnpm run typecheck
 NODE_ENV=production
 DATABASE_URL=postgresql://user:password@db.example.com:5432/production_db
 SESSION_SECRET=your-very-secure-random-secret-key
-SKIP_SEED=true
 ```
 
 ## Deployment
@@ -222,7 +225,6 @@ The application will be available at http://localhost:3000
    ```prisma
    datasource db {
      provider = "postgresql"  // Change from "sqlite" to "postgresql"
-     url      = env("DATABASE_URL")
    }
    ```
 
@@ -231,7 +233,7 @@ The application will be available at http://localhost:3000
    DATABASE_URL=postgresql://remix:remix_password@postgres:5432/remix_dashboard
    ```
 
-3. **Uncomment PostgreSQL service** in `docker-compose.yml`
+3. **Uncomment PostgreSQL service** in `compose.yaml`
 
 4. **Restart services**:
    ```sh
@@ -254,7 +256,6 @@ docker run -d \
   --name remix-dashboard \
   -p 3000:3000 \
   -e SESSION_SECRET="your-secret-key-here" \
-  -e SKIP_SEED=true \
   -v remix-data:/app/data \
   remix-dashboard
 
@@ -290,7 +291,6 @@ docker run -d \
   -p 3000:3000 \
   -e DATABASE_URL="postgresql://remix:secure_password@postgres:5432/remix_dashboard" \
   -e SESSION_SECRET="your-secret-key-here" \
-  -e SKIP_SEED=true \
   remix-dashboard
 ```
 
@@ -300,7 +300,6 @@ When deploying with Docker, set these environment variables:
 
 - `SESSION_SECRET` - **Required**. Generate with: `openssl rand -hex 32`
 - `DATABASE_URL` - Database connection string (default: `file:./data/production.db`)
-- `SKIP_SEED` - Set to `true` to skip seed data in production
 - `PORT` - Port to listen on (default: `3000`)
 
 ## Troubleshooting
@@ -336,7 +335,4 @@ If you need complete control over the database initialization process:
 ```sh
 # Development environment
 SKIP_DB_INIT=true pnpm dev
-
-# Production environment
-SKIP_SEED=true pnpm start
 ```

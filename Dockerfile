@@ -3,8 +3,8 @@ FROM node:lts-alpine AS base
 # Install pnpm
 RUN npm install -g pnpm
 
-# Install necessary build tools for Prisma
-RUN apk add --no-cache libc6-compat
+# Install necessary build tools for Prisma and better-sqlite3
+RUN apk add --no-cache libc6-compat python3 make g++
 
 FROM base AS deps
 WORKDIR /app
@@ -27,8 +27,10 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/server.ts ./server.ts
+COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/scripts ./scripts
+COPY --from=builder /app/app/generated ./app/generated
 
 # Set environment variables
 ENV NODE_ENV=production
