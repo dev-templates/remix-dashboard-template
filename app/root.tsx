@@ -1,23 +1,30 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
-import "./tailwind.css";
-import type { LoaderFunctionArgs } from "@remix-run/node";
-import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes";
-import { Toaster } from "~/components/ui/sonner";
-import { cn } from "./lib/utils";
 import {
-	cookieSessionStorage,
-	getSession,
-	getUser,
-	themeSessionResolver,
-} from "./services/session.server";
+	Links,
+	Meta,
+	Outlet,
+	Scripts,
+	ScrollRestoration,
+	useLoaderData,
+} from "@remix-run/react"
+import "./tailwind.css"
+import type { LoaderFunctionArgs } from "@remix-run/node"
+import { Toaster } from "~/components/ui/sonner"
+import {
+	PreventFlashOnWrongTheme,
+	ThemeProvider,
+	useTheme,
+} from "~/lib/theme-provider"
+import { getThemeSession } from "~/lib/theme.server"
+import { cn } from "./lib/utils"
+import { cookieSessionStorage, getSession, getUser } from "./services/session.server"
 
 export async function loader({ request }: LoaderFunctionArgs) {
-	const { session } = await getSession(request);
-	const user = await getUser(request);
-	const { getTheme } = await themeSessionResolver(request);
+	const { session } = await getSession(request)
+	const user = await getUser(request)
+	const themeSession = await getThemeSession(request)
 	return Response.json(
 		{
-			theme: getTheme(),
+			theme: themeSession.getTheme(),
 			user,
 		},
 		{
@@ -25,26 +32,23 @@ export async function loader({ request }: LoaderFunctionArgs) {
 				"Set-Cookie": await cookieSessionStorage.commitSession(session),
 			},
 		},
-	);
+	)
 }
 
-// Wrap your app with ThemeProvider.
-// `specifiedTheme` is the stored theme in the session storage.
-// `themeAction` is the action name that's used to change the theme in the session storage.
 export default function AppWithProviders() {
-	const data = useLoaderData<typeof loader>();
+	const data = useLoaderData<typeof loader>()
 	return (
 		<ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
 			<App />
 		</ThemeProvider>
-	);
+	)
 }
 
 export function App() {
-	const data = useLoaderData<typeof loader>();
-	const [theme] = useTheme();
+	const data = useLoaderData<typeof loader>()
+	const { resolvedTheme } = useTheme()
 	return (
-		<html lang="en" className={cn(theme)}>
+		<html lang="en" className={cn(resolvedTheme)} suppressHydrationWarning>
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,5 +63,5 @@ export function App() {
 				<Scripts />
 			</body>
 		</html>
-	);
+	)
 }

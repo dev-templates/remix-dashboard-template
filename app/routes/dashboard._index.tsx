@@ -77,7 +77,13 @@ export default function Dashboard() {
 					>
 						<PieChart>
 							<ChartTooltip content={<ChartTooltipContent hideLabel />} />
-							<Pie data={data.chartData} dataKey="visitors" label nameKey="browser" />
+							<Pie
+								data={data.chartData}
+								dataKey="visitors"
+								label
+								nameKey="browser"
+								isAnimationActive={false}
+							/>
 						</PieChart>
 					</ChartContainer>
 				</CardContent>

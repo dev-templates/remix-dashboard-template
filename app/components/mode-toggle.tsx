@@ -1,16 +1,16 @@
-import { FiMoon, FiSun } from "react-icons/fi";
-import { MdComputer } from "react-icons/md";
-import { Theme, useTheme } from "remix-themes";
-import { Button } from "./ui/button";
+import { FiMoon, FiSun } from "react-icons/fi"
+import { MdComputer } from "react-icons/md"
+import { useTheme } from "~/lib/theme-provider"
+import { Button } from "./ui/button"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "./ui/dropdown-menu"
 
 export function ModeToggle() {
-	const [_theme, setTheme] = useTheme();
+	const { setTheme } = useTheme()
 
 	return (
 		<DropdownMenu>
@@ -22,11 +22,11 @@ export function ModeToggle() {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
-				<DropdownMenuItem onClick={() => setTheme(Theme.LIGHT)}>
+				<DropdownMenuItem onClick={() => setTheme("light")}>
 					<FiSun className="mr-2 h-4 w-4" />
 					Light Mode
 				</DropdownMenuItem>
-				<DropdownMenuItem onClick={() => setTheme(Theme.DARK)}>
+				<DropdownMenuItem onClick={() => setTheme("dark")}>
 					<FiMoon className="mr-2 h-4 w-4" />
 					Dark Mode
 				</DropdownMenuItem>
@@ -36,5 +36,5 @@ export function ModeToggle() {
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
-	);
+	)
 }

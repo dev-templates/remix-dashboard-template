@@ -1,6 +1,5 @@
 import { createCookieSessionStorage } from "@remix-run/node";
 import { redirect } from "@remix-run/react";
-import { createThemeSessionResolver } from "remix-themes";
 import invariant from "tiny-invariant";
 import { getUserById, type User } from "~/models/user.server";
 
@@ -94,5 +93,3 @@ export async function createUserSession({
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set");
 
-// Type assertion needed due to SessionStorage type differences between @remix-run/node and remix-themes
-export const themeSessionResolver = createThemeSessionResolver(cookieSessionStorage as any);

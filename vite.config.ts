@@ -1,7 +1,43 @@
 import { vitePlugin as remix } from "@remix-run/dev";
-import { defineConfig, type Plugin } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig, type Plugin, type UserConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
+
+/**
+ * Wraps an array of Vite plugins, intercepting their config() hooks
+ * to convert deprecated `esbuild` options to `oxc` before Vite sees them.
+ */
+function patchEsbuildToOxc(plugins: Plugin[]): Plugin[] {
+	return plugins.map((plugin) => {
+		const originalConfig = plugin.config;
+		if (!originalConfig) return plugin;
+
+		plugin.config = async function (config, env) {
+			const handler =
+				typeof originalConfig === "function"
+					? originalConfig
+					: originalConfig.handler;
+			const result = (await handler.call(this, config, env)) as
+				| UserConfig
+				| undefined;
+			if (result?.esbuild) {
+				const { jsx, jsxDev } = result.esbuild as {
+					jsx?: string;
+					jsxDev?: boolean;
+				};
+				result.oxc = {
+					jsx:
+						jsx === "automatic"
+							? { runtime: "automatic", development: jsxDev }
+							: undefined,
+				};
+				delete result.esbuild;
+			}
+			return result;
+		};
+
+		return plugin;
+	});
+}
 
 function dbInitPlugin(): Plugin {
 	let isInitialized = false;
@@ -75,14 +111,30 @@ export default defineConfig({
 	plugins: [
 		dbInitPlugin(),
 		tailwindcss(),
-		remix({
-			future: {
-				v3_fetcherPersist: true,
-				v3_relativeSplatPath: true,
-				v3_throwAbortReason: true,
-				v3_singleFetch: true,
-			},
-		}),
-		tsconfigPaths(),
+		...patchEsbuildToOxc(
+			remix({
+				future: {
+					v3_fetcherPersist: true,
+					v3_relativeSplatPath: true,
+					v3_throwAbortReason: true,
+					v3_singleFetch: true,
+				},
+			}),
+		),
 	],
+	resolve: {
+		tsconfigPaths: true,
+		// Ensure a single React instance across all dependencies.
+		// Without this, Vite's dep optimizer may resolve React differently
+		// for pre-bundled CJS packages (e.g. @radix-ui/*) vs application code,
+		// causing "Invalid hook call" errors during hydration.
+		dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
+	},
+	ssr: {
+		// Radix UI packages use CJS format without "type": "module".
+		// Vite 8 externalizes all SSR dependencies by default, which causes
+		// ESM/CJS interop issues (e.g. `React.useState` is null during SSR).
+		// Bundling them into the SSR output resolves the problem.
+		noExternal: [/^@radix-ui\//],
+	},
 });

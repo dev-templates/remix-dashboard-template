@@ -2,6 +2,7 @@ import { Link, useLocation } from "@remix-run/react";
 import { FaCaretDown } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
 import { VscThreeBars } from "react-icons/vsc";
+import { ModeToggle } from "~/components/mode-toggle";
 import { Label } from "~/components/ui/label";
 import { docsConfig } from "~/config/docs";
 import { useUser } from "~/hooks/useUser";
@@ -77,14 +78,17 @@ export default function Sidebar() {
 					<p className="font-bold">{user?.username ?? "user1"}</p>
 					<p className="text-sm text-muted-foreground">{user?.role?.name ?? "admin"}</p>
 				</div>
-				<Link
-					to="/logout"
-					className="ml-auto p-2 group-[:has(>input:checked)]/sidebar:ml-0"
-					aria-label="Logout"
-					title="Logout"
-				>
-					<HiOutlineLogout className="w-5 h-5" />
-				</Link>
+				<div className="ml-auto flex items-center gap-1 group-[:has(>input:checked)]/sidebar:ml-0">
+					<ModeToggle />
+					<Link
+						to="/logout"
+						className="p-2"
+						aria-label="Logout"
+						title="Logout"
+					>
+						<HiOutlineLogout className="w-5 h-5" />
+					</Link>
+				</div>
 			</div>
 		</aside>
 	);
